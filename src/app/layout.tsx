@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import { AuthProvider } from "@/providers/auth-provider";
 
 import Header from "@/components/layout/header";
+import PageLoader from "@/components/ui/page-loader";
 
 import "./globals.css";
 
@@ -35,6 +36,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
+            <PageLoader />
             <Header />
             {children}
           </AuthProvider>

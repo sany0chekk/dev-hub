@@ -25,24 +25,56 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    let isMounted = true;
+
+    const cachedUser = localStorage.getItem("user");
+    if (cachedUser) {
+      setUser(JSON.parse(cachedUser));
+    }
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setIsLoading(false);
+      if (isMounted) {
+        setUser(user);
+        setIsLoading(false);
+        if (user) {
+          localStorage.setItem("user", JSON.stringify(user));
+        } else {
+          localStorage.removeItem("user");
+        }
+      }
     });
 
-    return () => unsubscribe();
+    return () => {
+      isMounted = false;
+      unsubscribe();
+    };
   }, []);
 
   const signInWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
-    setUser(user);
+    try {
+      setIsLoading(true);
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      setUser(result.user);
+      localStorage.setItem("user", JSON.stringify(result.user));
+    } catch (error) {
+      console.error("Sign-in error:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const signOut = async () => {
-    await firebaseSignOut(auth);
-    setUser(null);
+    try {
+      setIsLoading(true);
+      await firebaseSignOut(auth);
+      setUser(null);
+      localStorage.removeItem("user");
+    } catch (error) {
+      console.error("Sign-out error:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
