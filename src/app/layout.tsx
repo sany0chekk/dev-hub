@@ -3,8 +3,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import { ThemeProvider } from "@/providers/theme-provider";
+import { AuthProvider } from "@/providers/auth-provider";
 
-import Header from "@/components/layouts/header";
+import Header from "@/components/layout/header";
 
 import "./globals.css";
 
@@ -33,8 +34,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          {children}
+          <AuthProvider>
+            <Header />
+            {children}
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
