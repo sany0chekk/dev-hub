@@ -41,24 +41,24 @@ export default function UserMenu() {
             Your articles
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="mb-2" />
         <DropdownMenuItem asChild>
-          <div>
-            <Link href="/editor" className="w-full">
-              <Button variant="outline" className="w-full font-500 gap-1">
-                Add article
-                <Plus className="text-foreground" />
-              </Button>
+          <Button
+            variant="outline"
+            className="w-full font-500 gap-1 mb-2"
+            asChild
+          >
+            <Link href="/editor">
+              Add article
+              <Plus className="text-foreground" />
             </Link>
-          </div>
+          </Button>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <div>
-            <Button onClick={signOut} className="w-full font-500">
-              Logout
-              <LogOut className="text-background" />
-            </Button>
-          </div>
+          <Button onClick={signOut} className="w-full font-500">
+            Logout
+            <LogOut className="text-background" />
+          </Button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -7,7 +7,6 @@ import {
   BubbleMenu,
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Code from "@tiptap/extension-code";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import TextAlign from "@tiptap/extension-text-align";
 import BulletList from "@tiptap/extension-bullet-list";
@@ -19,8 +18,18 @@ import { FontSize } from "@/lib/font-size";
 import MenuBar from "./menu-bar";
 import "./styles.css";
 import { Button } from "../ui/button";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
+import { Input } from "../ui/input";
+import { useState } from "react";
+import { useArticle } from "@/hooks/useArticle";
 
 export default function TipTapEditor() {
+  const { user } = useAuth();
+  const router = useRouter();
+  const [title, setTitle] = useState("");
+  const { createArticle } = useArticle();
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -28,16 +37,13 @@ export default function TipTapEditor() {
         lowlight,
         defaultLanguage: "javascript",
       }),
-      Code,
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),
       BulletList,
       OrderedList,
       TextStyle,
-      Color.configure({
-        types: ["textStyle"],
-      }),
+      Color,
       FontSize.configure({
         types: ["textStyle"],
       }),
@@ -49,18 +55,32 @@ export default function TipTapEditor() {
     return null;
   }
 
-  const handleSave = () => {
+  const handleSave = async () => {
+    if (!editor) return;
+
     const html = editor.getHTML();
-    const json = editor.getJSON();
 
-    console.log("HTML:", html);
-    console.log("JSON:", json);
+    try {
+      const articleId = await createArticle.mutateAsync({
+        title,
+        content: html,
+        user,
+      });
 
-    localStorage.setItem("editor-content", html);
+      router.push(`/articles/${articleId}`);
+    } catch (error) {
+      console.error("Error saving article:", error);
+    }
   };
 
   return (
     <div className="relative flex-grow">
+      <Input
+        placeholder="Article title"
+        className="mb-4 p-6 bg-background"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+      />
       <FloatingMenu
         className="border rounded-lg p-2 flex items-center gap-2 bg-background shadow-lg"
         editor={editor}
@@ -86,8 +106,12 @@ export default function TipTapEditor() {
         <div className="flex-grow border rounded-lg p-4 shadow-lg">
           <EditorContent editor={editor} />
         </div>
-        <Button className="block mt-4 ml-auto" onClick={handleSave}>
-          Publish article
+        <Button
+          className="block mt-4 ml-auto"
+          onClick={handleSave}
+          disabled={!title || createArticle.isPending}
+        >
+          {createArticle.isPending ? "Publishing..." : "Publish article"}
         </Button>
       </div>
     </div>

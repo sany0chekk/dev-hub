@@ -1,4 +1,13 @@
 import { Extension } from "@tiptap/core";
+import { ChainedCommands } from "@tiptap/core";
+
+declare module "@tiptap/core" {
+  interface Commands<ReturnType> {
+    fontSize: {
+      setFontSize: (fontSize: string) => ReturnType;
+    };
+  }
+}
 
 export const FontSize = Extension.create({
   name: "fontSize",
@@ -15,7 +24,6 @@ export const FontSize = Extension.create({
               if (!attributes.fontSize) {
                 return {};
               }
-
               return {
                 style: `font-size: ${attributes.fontSize}`,
               };
@@ -29,8 +37,8 @@ export const FontSize = Extension.create({
   addCommands() {
     return {
       setFontSize:
-        (fontSize) =>
-        ({ chain }) => {
+        (fontSize: string) =>
+        ({ chain }: { chain: () => ChainedCommands }) => {
           return chain().setMark("textStyle", { fontSize }).run();
         },
     };

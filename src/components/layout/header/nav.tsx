@@ -5,7 +5,7 @@ export default function Nav() {
     <nav className="hidden md:flex">
       <ul className="flex items-center gap-6">
         <NavItem href="/">Home</NavItem>
-        <NavItem href="/">Blog</NavItem>
+        <NavItem href="/blog">Blog</NavItem>
       </ul>
     </nav>
   );

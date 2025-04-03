@@ -16,10 +16,19 @@ import {
 import FormatButton from "./format-button";
 import LanguageSelect from "./language-select";
 import ColorPicker from "./color-picker";
+import { Button } from "../ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 interface MenuBarProps {
   editor: Editor;
 }
+
+const fontSizes = [
+  { label: "Small", value: "0.875rem" },
+  { label: "Normal", value: "1rem" },
+  { label: "Large", value: "1.25rem" },
+  { label: "Huge", value: "1.5rem" },
+];
 
 export default function MenuBar({ editor }: MenuBarProps) {
   if (!editor) return null;
@@ -83,6 +92,30 @@ export default function MenuBar({ editor }: MenuBarProps) {
             title="Ordered List"
           />
           <ColorPicker editor={editor} />
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                <span className="text-xs">Aa</span>
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-40 p-2">
+              <div className="grid gap-2">
+                {fontSizes.map((size) => (
+                  <Button
+                    key={size.value}
+                    variant="ghost"
+                    size="sm"
+                    className="justify-start"
+                    onClick={() =>
+                      editor.chain().focus().setFontSize(size.value).run()
+                    }
+                  >
+                    {size.label}
+                  </Button>
+                ))}
+              </div>
+            </PopoverContent>
+          </Popover>
         </>
       )}
       <FormatButton
