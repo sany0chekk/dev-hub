@@ -5,76 +5,20 @@ import {
   EditorContent,
   FloatingMenu,
   BubbleMenu,
-  Editor,
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Code from "@tiptap/extension-code";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
-import { createLowlight } from "lowlight";
-import js from "highlight.js/lib/languages/javascript";
-import ts from "highlight.js/lib/languages/typescript";
-import python from "highlight.js/lib/languages/python";
-import html from "highlight.js/lib/languages/xml";
-import css from "highlight.js/lib/languages/css";
-import php from "highlight.js/lib/languages/php";
-import ruby from "highlight.js/lib/languages/ruby";
-import go from "highlight.js/lib/languages/go";
-import rust from "highlight.js/lib/languages/rust";
-import { Bold, Italic, Strikethrough, Code2 } from "lucide-react";
-import FormatButton from "./format-button";
-import LanguageSelect from "./language-select";
+import TextAlign from "@tiptap/extension-text-align";
+import BulletList from "@tiptap/extension-bullet-list";
+import OrderedList from "@tiptap/extension-ordered-list";
+import TextStyle from "@tiptap/extension-text-style";
+import Color from "@tiptap/extension-color";
+import { lowlight } from "@/lib/syntax-highlighting";
+import { FontSize } from "@/lib/font-size";
+import MenuBar from "./menu-bar";
 import "./styles.css";
-
-const lowlight = createLowlight();
-lowlight.register("js", js);
-lowlight.register("ts", ts);
-lowlight.register("python", python);
-lowlight.register("html", html);
-lowlight.register("css", css);
-lowlight.register("php", php);
-lowlight.register("ruby", ruby);
-lowlight.register("go", go);
-lowlight.register("rust", rust);
-
-const MenuBar = ({ editor }: { editor: Editor }) => {
-  if (!editor) return null;
-
-  return (
-    <>
-      {!editor.isActive("codeBlock") && (
-        <>
-          <FormatButton
-            onClick={() => editor.chain().focus().toggleBold().run()}
-            isActive={editor.isActive("bold")}
-            icon={Bold}
-            title="Bold"
-          />
-          <FormatButton
-            onClick={() => editor.chain().focus().toggleItalic().run()}
-            isActive={editor.isActive("italic")}
-            icon={Italic}
-            title="Italic"
-          />
-          <FormatButton
-            onClick={() => editor.chain().focus().toggleStrike().run()}
-            isActive={editor.isActive("strike")}
-            icon={Strikethrough}
-            title="Strike"
-          />
-        </>
-      )}
-      <FormatButton
-        onClick={() => {
-          editor.chain().focus().insertContent("\n").toggleCodeBlock().run();
-        }}
-        isActive={editor.isActive("codeBlock")}
-        icon={Code2}
-        title="Code Block"
-      />
-      {editor.isActive("codeBlock") && <LanguageSelect editor={editor} />}
-    </>
-  );
-};
+import { Button } from "../ui/button";
 
 export default function TipTapEditor() {
   const editor = useEditor({
@@ -85,6 +29,18 @@ export default function TipTapEditor() {
         defaultLanguage: "javascript",
       }),
       Code,
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+      }),
+      BulletList,
+      OrderedList,
+      TextStyle,
+      Color.configure({
+        types: ["textStyle"],
+      }),
+      FontSize.configure({
+        types: ["textStyle"],
+      }),
     ],
     content: "Hello World! 🌎️",
   });
@@ -92,6 +48,16 @@ export default function TipTapEditor() {
   if (!editor) {
     return null;
   }
+
+  const handleSave = () => {
+    const html = editor.getHTML();
+    const json = editor.getJSON();
+
+    console.log("HTML:", html);
+    console.log("JSON:", json);
+
+    localStorage.setItem("editor-content", html);
+  };
 
   return (
     <div className="relative flex-grow">
@@ -116,8 +82,13 @@ export default function TipTapEditor() {
         <MenuBar editor={editor} />
       </BubbleMenu>
 
-      <div className="h-full border-2 rounded-lg p-4">
-        <EditorContent editor={editor} />
+      <div className="h-full flex flex-col">
+        <div className="flex-grow border rounded-lg p-4 shadow-lg">
+          <EditorContent editor={editor} />
+        </div>
+        <Button className="block mt-4 ml-auto" onClick={handleSave}>
+          Publish article
+        </Button>
       </div>
     </div>
   );

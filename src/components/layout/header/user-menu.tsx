@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, User, UserPen } from "lucide-react";
+import { BookOpen, LogOut, Plus, User, UserPen } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -44,8 +44,19 @@ export default function UserMenu() {
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <div>
-            <Button onClick={signOut} className="w-full">
+            <Link href="/editor" className="w-full">
+              <Button variant="outline" className="w-full font-500 gap-1">
+                Add article
+                <Plus className="text-foreground" />
+              </Button>
+            </Link>
+          </div>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <div>
+            <Button onClick={signOut} className="w-full font-500">
               Logout
+              <LogOut className="text-background" />
             </Button>
           </div>
         </DropdownMenuItem>
