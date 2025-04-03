@@ -1,0 +1,95 @@
+/* Code block styles */
+.prose pre,
+pre {
+  background: var(--background-secondary) !important;
+  font-family: "JetBrainsMono", monospace;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  border: 1px solid hsl(var(--border));
+  font-weight: 500;
+}
+
+.prose pre code,
+pre code {
+  color: inherit !important;
+  padding: 0;
+  background: none !important;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Inline code styles */
+.prose code,
+code {
+  color: hsl(var(--foreground)) !important;
+  background: hsl(var(--muted)) !important;
+  padding: 0.25rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Syntax highlighting - Dark theme */
+:root[class~="dark"] .hljs-keyword {
+  color: #ff79c6;
+}
+:root[class~="dark"] .hljs-string {
+  color: #f1fa8c;
+}
+:root[class~="dark"] .hljs-comment {
+  color: #6272a4;
+}
+:root[class~="dark"] .hljs-function {
+  color: #50fa7b;
+}
+:root[class~="dark"] .hljs-number {
+  color: #bd93f9;
+}
+:root[class~="dark"] .hljs-operator {
+  color: #ff79c6;
+}
+:root[class~="dark"] .hljs-variable {
+  color: #f8f8f2;
+}
+:root[class~="dark"] .hljs-title {
+  color: #50fa7b;
+}
+:root[class~="dark"] .hljs-params {
+  color: #f8f8f2;
+}
+:root[class~="dark"] .hljs-built_in {
+  color: #8be9fd;
+}
+
+/* Syntax highlighting - Light theme */
+:root:not([class~="dark"]) .hljs-keyword {
+  color: #d73a49;
+}
+:root:not([class~="dark"]) .hljs-string {
+  color: #032f62;
+}
+:root:not([class~="dark"]) .hljs-comment {
+  color: #6a737d;
+}
+:root:not([class~="dark"]) .hljs-function {
+  color: #6f42c1;
+}
+:root:not([class~="dark"]) .hljs-number {
+  color: #005cc5;
+}
+:root:not([class~="dark"]) .hljs-operator {
+  color: #d73a49;
+}
+:root:not([class~="dark"]) .hljs-variable {
+  color: #24292e;
+}
+:root:not([class~="dark"]) .hljs-title {
+  color: #6f42c1;
+}
+:root:not([class~="dark"]) .hljs-params {
+  color: #24292e;
+}
+:root:not([class~="dark"]) .hljs-built_in {
+  color: #005cc5;
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, use } from "react";
-import "@/components/editor/styles.css";
+import "@/components/editor/code-styles.css";
 import hljs from "highlight.js";
 import "highlight.js/styles/github-dark.css";
 import { useArticle } from "@/hooks/useArticle";
@@ -49,7 +49,7 @@ export default function ArticlePage({
       </div>
       <Separator className="my-10" />
       <div
-        className="prose prose-sm max-w-none dark:prose-invert prose-p:my-4 [&>p:empty]:h-4 prose-pre:bg-[#1a1a1a] prose-pre:text-white prose-pre:p-4 prose-pre:rounded-lg prose-pre:font-mono prose-pre:text-sm prose-code:bg-[#1a1a1a] prose-code:text-white prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:font-mono prose-code:text-sm [&>ul]:pl-4 [&>ol]:pl-4 [&>li]:my-1 [&>ul]:!list-disc [&>ol]:!list-decimal"
+        className="prose prose-sm max-w-none dark:prose-invert prose-p:my-4 [&>p:empty]:h-4 [&>ul]:pl-4 [&>ol]:pl-4 [&>li]:my-1 [&>ul]:!list-disc [&>ol]:!list-decimal"
         dangerouslySetInnerHTML={{ __html: article.content }}
       />
     </article>

@@ -17,6 +17,7 @@ import { lowlight } from "@/lib/syntax-highlighting";
 import { FontSize } from "@/lib/font-size";
 import MenuBar from "./menu-bar";
 import "./styles.css";
+import "@/components/editor/code-styles.css";
 import { Button } from "../ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";

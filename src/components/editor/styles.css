@@ -37,29 +37,60 @@
   text-align: justify;
 }
 
-.ProseMirror pre {
-  background: #1a1a1a;
-  color: #fff;
-  font-family: "JetBrainsMono", monospace;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-  margin: 0.5em 0;
-}
-
-.ProseMirror code {
-  background: #1a1a1a;
-  color: #fff;
-  font-family: "JetBrainsMono", monospace;
-  padding: 0.2em 0.4em;
-  border-radius: 0.25rem;
-}
-
 .ProseMirror span[style*="color"] {
   color: var(--color);
 }
 
 .ProseMirror span[style*="font-size"] {
   font-size: var(--font-size);
+}
+
+.ProseMirror pre {
+  background: var(--background-secondary);
+  font-family: "JetBrainsMono", monospace;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  margin: 1rem 0;
+  border: 1px solid hsl(var(--border));
+
+  code {
+    color: inherit;
+    padding: 0;
+    background: none;
+    font-size: 0.8rem;
+  }
+
+  /* Syntax highlighting */
+  .hljs-keyword {
+    color: #ff79c6;
+  }
+  .hljs-string {
+    color: #f1fa8c;
+  }
+  .hljs-comment {
+    color: #6272a4;
+  }
+  .hljs-function {
+    color: #50fa7b;
+  }
+  .hljs-number {
+    color: #bd93f9;
+  }
+  .hljs-operator {
+    color: #ff79c6;
+  }
+  .hljs-variable {
+    color: #f8f8f2;
+  }
+  .hljs-title {
+    color: #50fa7b;
+  }
+  .hljs-params {
+    color: #f8f8f2;
+  }
+  .hljs-built_in {
+    color: #8be9fd;
+  }
 }
 
 .ProseMirror pre .hljs-comment,
