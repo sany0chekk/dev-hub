@@ -104,7 +104,7 @@ export default function TipTapEditor() {
       </BubbleMenu>
 
       <div className="h-full flex flex-col">
-        <div className="flex-grow border rounded-lg p-4 shadow-lg">
+        <div className="flex-grow border rounded-lg p-4 shadow-lg w-full">
           <EditorContent editor={editor} />
         </div>
         <Button

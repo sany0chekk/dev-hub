@@ -1,11 +1,17 @@
 "use client";
 
 import { useEffect, use } from "react";
-import "@/components/editor/code-styles.css";
+import Link from "next/link";
 import hljs from "highlight.js";
+import { Loader, SearchX } from "lucide-react";
+
+import "@/components/editor/code-styles.css";
 import "highlight.js/styles/github-dark.css";
+
 import { useArticle } from "@/hooks/useArticle";
+
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 
 export default function ArticlePage({
   params,
@@ -25,16 +31,25 @@ export default function ArticlePage({
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        Loading...
+      <div className="flex gap-2 justify-center items-center h-screen font-medium text-lg">
+        <Loader className="animate-spin" />
+        Loading article...
       </div>
     );
   }
 
   if (error || !article) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        Article not found
+      <div className="flex-grow flex flex-col gap-4 justify-center items-center">
+        <div className="flex gap-2 items-center font-medium text-lg">
+          <SearchX className="size-8" />
+          Article not found
+        </div>
+        <Button variant={"outline"} asChild>
+          <Link className="block" href="/">
+            Go back
+          </Link>
+        </Button>
       </div>
     );
   }
@@ -49,7 +64,7 @@ export default function ArticlePage({
       </div>
       <Separator className="my-10" />
       <div
-        className="prose prose-sm max-w-none dark:prose-invert prose-p:my-4 [&>p:empty]:h-4 [&>ul]:pl-4 [&>ol]:pl-4 [&>li]:my-1 [&>ul]:!list-disc [&>ol]:!list-decimal"
+        className="prose prose-sm max-w-none dark:prose-invert prose-p:my-4 [&>p:empty]:h-4 [&>ul]:pl-4 [&>ol]:pl-4 [&>li]:my-1 [&>ul]:!list-disc [&>ol]:!list-decimal [&>pre]:w-full [&>pre]:max-w-full [&>pre]:overflow-x-auto"
         dangerouslySetInnerHTML={{ __html: article.content }}
       />
     </article>
