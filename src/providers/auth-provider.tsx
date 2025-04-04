@@ -7,6 +7,7 @@ import {
   onAuthStateChanged,
   User,
   signOut as firebaseSignOut,
+  GithubAuthProvider,
 } from "firebase/auth";
 
 import { auth } from "@/lib/firebase/firebase-config";
@@ -15,6 +16,7 @@ interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   signInWithGoogle: () => Promise<void>;
+  signInWithGithub: () => Promise<void>;
   signOut: () => Promise<void>;
 }
 
@@ -64,6 +66,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const signInWithGithub = async () => {
+    try {
+      setIsLoading(true);
+      const provider = new GithubAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      setUser(result.user);
+      localStorage.setItem("user", JSON.stringify(result.user));
+    } catch (error) {
+      console.error("Sign-in error:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const signOut = async () => {
     try {
       setIsLoading(true);
@@ -79,7 +95,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, isLoading, signInWithGoogle, signOut }}
+      value={{ user, isLoading, signInWithGoogle, signInWithGithub, signOut }}
     >
       {children}
     </AuthContext.Provider>

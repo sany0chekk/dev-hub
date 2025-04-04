@@ -10,11 +10,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useAuth } from "@/hooks/useAuth";
-import { LogIn } from "lucide-react";
+import { Github, LogIn } from "lucide-react";
 import Image from "next/image";
 
 export default function UserAuth() {
-  const { signInWithGoogle } = useAuth();
+  const { signInWithGoogle, signInWithGithub } = useAuth();
 
   return (
     <Dialog>
@@ -40,6 +40,10 @@ export default function UserAuth() {
               height={20}
             />
             Login with Google
+          </Button>
+          <Button onClick={signInWithGithub}>
+            <Github className="size-6" />
+            Login with GitHub
           </Button>
         </div>
       </DialogContent>
