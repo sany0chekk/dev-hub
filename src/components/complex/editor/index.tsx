@@ -1,11 +1,8 @@
 "use client";
 
-import {
-  useEditor,
-  EditorContent,
-  FloatingMenu,
-  BubbleMenu,
-} from "@tiptap/react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 import StarterKit from "@tiptap/starter-kit";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import TextAlign from "@tiptap/extension-text-align";
@@ -13,17 +10,25 @@ import BulletList from "@tiptap/extension-bullet-list";
 import OrderedList from "@tiptap/extension-ordered-list";
 import TextStyle from "@tiptap/extension-text-style";
 import Color from "@tiptap/extension-color";
+import {
+  useEditor,
+  EditorContent,
+  FloatingMenu,
+  BubbleMenu,
+} from "@tiptap/react";
+
 import { lowlight } from "@/lib/syntax-highlighting";
 import { FontSize } from "@/lib/font-size";
+
 import MenuBar from "./menu-bar";
-import "./styles.css";
-import "@/components/editor/code-styles.css";
-import { Button } from "../ui/button";
+import "@/components/complex/editor/code-styles.css";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
 import { useAuth } from "@/hooks/useAuth";
-import { useRouter } from "next/navigation";
-import { Input } from "../ui/input";
-import { useState } from "react";
 import { useArticle } from "@/hooks/useArticle";
+
+import "./styles.css";
 
 export default function TipTapEditor() {
   const { user } = useAuth();

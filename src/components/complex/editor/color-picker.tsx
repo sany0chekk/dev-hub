@@ -1,8 +1,12 @@
 "use client";
 
 import { Editor } from "@tiptap/core";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Button } from "../ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
 import { Paintbrush, Type } from "lucide-react";
 import { cn } from "@/lib/utils";
 

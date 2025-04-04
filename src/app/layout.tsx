@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 
 import { ThemeProvider } from "@/providers/theme-provider";
 import { AuthProvider } from "@/providers/auth-provider";
-import { Providers } from "./providers";
+import { QueryProvider } from "../providers/react-query-provider";
 
 import Header from "@/components/layout/header";
 import PageLoader from "@/components/ui/page-loader";
@@ -32,7 +32,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} antialiased flex flex-col min-h-screen`}
       >
-        <Providers>
+        <QueryProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -45,7 +45,7 @@ export default function RootLayout({
               {children}
             </AuthProvider>
           </ThemeProvider>
-        </Providers>
+        </QueryProvider>
       </body>
     </html>
   );

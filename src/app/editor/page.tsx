@@ -1,7 +1,7 @@
 "use client";
 
 import Container from "@/components/layout/container";
-import Editor from "@/components/editor";
+import Editor from "@/components/complex/editor";
 
 export default function EditorPage() {
   return (

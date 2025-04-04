@@ -5,13 +5,14 @@ import Link from "next/link";
 import hljs from "highlight.js";
 import { Loader, SearchX } from "lucide-react";
 
-import "@/components/editor/code-styles.css";
+import "@/components/complex/editor/code-styles.css";
 import "highlight.js/styles/github-dark.css";
 
 import { useArticle } from "@/hooks/useArticle";
 
-import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+import Container from "@/components/layout/container";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function ArticlePage({
   params,
@@ -55,18 +56,26 @@ export default function ArticlePage({
   }
 
   return (
-    <article className="max-w-4xl mx-auto px-4 py-10">
-      <h1 className="text-2xl font-bold">{article.title}</h1>
-      <div>
-        <p className="text-sm text-muted-foreground">
-          By {article.authorName} • {article.createdAt.toLocaleDateString()}
-        </p>
-      </div>
-      <Separator className="my-10" />
-      <div
-        className="prose prose-sm max-w-none dark:prose-invert prose-p:my-4 [&>p:empty]:h-4 [&>ul]:pl-4 [&>ol]:pl-4 [&>li]:my-1 [&>ul]:!list-disc [&>ol]:!list-decimal [&>pre]:w-full [&>pre]:max-w-full [&>pre]:overflow-x-auto"
-        dangerouslySetInnerHTML={{ __html: article.content }}
-      />
-    </article>
+    <section className="pt-6 pb-16">
+      <Container className="flex flex-col gap-10">
+        <Card>
+          <CardContent>
+            <h1 className="text-xl md:text-2xl font-bold">{article.title}</h1>
+            <div>
+              <p className="text-sm text-muted-foreground">
+                By {article.authorName} •{" "}
+                {article.createdAt.toLocaleDateString()}
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+        <article className="max-w-[800px] w-full mx-auto">
+          <div
+            className="prose prose-sm max-w-none dark:prose-invert prose-p:my-4 [&>p:empty]:h-4 [&>ul]:pl-4 [&>ol]:pl-4 [&>li]:my-1 [&>ul]:!list-disc [&>ol]:!list-decimal [&>pre]:w-full [&>pre]:max-w-full [&>pre]:overflow-x-auto"
+            dangerouslySetInnerHTML={{ __html: article.content }}
+          />
+        </article>
+      </Container>
+    </section>
   );
 }

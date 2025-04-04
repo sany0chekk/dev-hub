@@ -13,17 +13,7 @@ import {
 import { db } from "@/lib/firebase/firebase-config";
 import { Editor } from "@tiptap/react";
 import { User } from "firebase/auth";
-
-interface Article {
-  id: string;
-  title: string;
-  content: string;
-  json: Record<string, unknown>;
-  authorId: string;
-  authorName: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { Article } from "@/app/types/article";
 
 export const getArticles = async (limitCount?: number): Promise<Article[]> => {
   const articlesRef = collection(db, "articles");
@@ -47,6 +37,12 @@ export const getArticles = async (limitCount?: number): Promise<Article[]> => {
       updatedAt: data.updatedAt.toDate(),
     } as Article;
   });
+};
+
+export const getArticlesCount = async (): Promise<number> => {
+  const articlesRef = collection(db, "articles");
+  const querySnapshot = await getDocs(articlesRef);
+  return querySnapshot.size;
 };
 
 export const useArticle = (articleId?: string) => {
