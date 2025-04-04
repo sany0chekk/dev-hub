@@ -3,7 +3,7 @@
 import { useEffect, use } from "react";
 import Link from "next/link";
 import hljs from "highlight.js";
-import { Loader, SearchX } from "lucide-react";
+import { ChevronLeft, SearchX } from "lucide-react";
 
 import "@/components/complex/editor/code-styles.css";
 import "highlight.js/styles/github-dark.css";
@@ -14,11 +14,15 @@ import { Button } from "@/components/ui/button";
 import Container from "@/components/layout/container";
 import { Card, CardContent } from "@/components/ui/card";
 
+import { Skeleton } from "@/components/ui/skeleton";
+import { useRouter } from "next/navigation";
+
 export default function ArticlePage({
   params,
 }: {
   params: Promise<{ articleId: string }>;
 }) {
+  const router = useRouter();
   const { articleId } = use(params);
   const { article, isLoading, error } = useArticle(articleId);
 
@@ -32,10 +36,13 @@ export default function ArticlePage({
 
   if (isLoading) {
     return (
-      <div className="flex gap-2 justify-center items-center h-screen font-medium text-lg">
-        <Loader className="animate-spin" />
-        Loading article...
-      </div>
+      <section className="pt-6 pb-16">
+        <Container className="flex flex-col gap-10">
+          <Skeleton className="w-[100px] h-[35px]" />
+          <Skeleton className="w-full h-[150px]" />
+          <Skeleton className="max-w-[800px] w-full mx-auto h-[500px]" />
+        </Container>
+      </section>
     );
   }
 
@@ -55,9 +62,21 @@ export default function ArticlePage({
     );
   }
 
+  const handleGoBack = () => {
+    router.back();
+  };
+
   return (
     <section className="pt-6 pb-16">
       <Container className="flex flex-col gap-10">
+        <Button
+          className="mr-auto font-semibold"
+          variant={"outline"}
+          onClick={handleGoBack}
+        >
+          <ChevronLeft className="size-5" />
+          Go back
+        </Button>
         <Card>
           <CardContent>
             <h1 className="text-xl md:text-2xl font-bold">{article.title}</h1>
